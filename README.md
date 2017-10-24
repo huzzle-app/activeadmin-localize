@@ -1,6 +1,8 @@
-# Activeadmin::Mongoid::Localize
+# Activeadmin::Localize
 
-Easily edit mongoid localized fields in ActiveAdmin (all locales on one page)
+Easily edit localized fields in ActiveAdmin (all locales on one page)
+
+Tested with [json_translate](https://github.com/cfabianski/json_translate) but other translation storages should also be compatible.
 
 ## Screenshot
 
@@ -10,7 +12,7 @@ Easily edit mongoid localized fields in ActiveAdmin (all locales on one page)
 
 Add this line to your application's Gemfile:
 
-    gem 'activeadmin-mongoid-localize'
+    gem 'activeadmin-localize'
 
 And then execute:
 
@@ -18,11 +20,16 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install activeadmin-mongoid-localize
+    $ gem install activeadmin-localize
 
 ## Usage
 
 Really simple:
+
+    permit_params(
+      title_translations: I18n.available_locales,
+      content_translations: I18n.available_locales
+    )
 
     # in model
     field :title, type: String, localize: true
@@ -31,7 +38,6 @@ Really simple:
     # in admin
     f.inputs do
       f.localized_input :title
-      
       # and ckeditor too!
       f.localized_input :content, as: :ckeditor
     end
@@ -43,31 +49,24 @@ Really simple:
 
     # displaying in show action
     show do |f|
-        panel I18n.t('fields') do
-            localize_attributes_table_for f do
-                row :name
-                row :text
-            end
+      panel I18n.t('fields') do
+        localize_attributes_table_for f do
+          row :name
+          row :text
         end
+      end
     end
 
 
 ## Configuration
 
-By default this gem provides editable fields for all the available locales. If however, you would want to restrict to some particular locales, then create a new *'active_admin_mongoid_localize.rb'* file in the *'/config/initializers'* folder of your rails application:
+By default this gem provides editable fields for all the available locales. If however, you would want to restrict to some particular locales, then create a new *'activeadmin_localize.rb'* file in the *'/config/initializers'* folder of your rails application:
 
-
-    ActiveAdmin::Mongoid::Localize.configure do |config|
-
+    ActiveAdmin::Localize.configure do |config|
       config.locales = [:en, :ja]    # Specify the locales you want to use
-
     end
 
-
-
 CKEditor is tested & working with my fork: https://github.com/glebtv/ckeditor
-
-ActiveAdmin-mongoid is tested & working with my fork: https://github.com/rs-pro/activeadmin-mongoid
 
 ## Contributing
 
@@ -79,6 +78,7 @@ ActiveAdmin-mongoid is tested & working with my fork: https://github.com/rs-pro/
 
 ## License
 
-This gem uses free flags icons from famfamfam -- http://www.famfamfam.com/lab/icons/flags/
+This gem uses flags icons from [flag-icons-css](https://github.com/lipis/flag-icon-css) (MIT Licensed)
 
 MIT License
+
