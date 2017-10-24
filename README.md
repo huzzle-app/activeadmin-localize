@@ -6,7 +6,7 @@ Tested with [json_translate](https://github.com/cfabianski/json_translate) but o
 
 ## Screenshot
 
- ![AML](https://rscx.ru/aml.jpg)
+ ![AL](/screenshots/localize.png?raw=true)
 
 ## Installation
 
