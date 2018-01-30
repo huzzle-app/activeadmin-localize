@@ -63,15 +63,6 @@ module ActiveAdmin
         end
       end
 
-      #def column_for_attribute(name)
-        # we only have one column for all locales
-        #if @obj.respond_to?(:fields)
-          #@obj.fields[@field]
-        #else
-          #@obj.class.columns_hash[@field] || @field.to_s
-        #end
-      #end
-
       def method_missing(*args)
         @obj.send(*args)
       end

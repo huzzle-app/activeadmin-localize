@@ -3,7 +3,6 @@ module Formtastic
     def localized_input(name, args = {})
       t = self.object.send("#{name}_translations")
       field = ActiveAdmin::Localize::Field.new(self.object, name)
-
       ret = ''
       self.semantic_fields_for "#{name}_translations", field do |lf|
         ::ActiveAdmin::Localize.locales.each do |locale|
@@ -32,6 +31,7 @@ module Formtastic
         end
       end
 
+      template.concat(ret.html_safe) if template.output_buffer && template.assigns[:has_many_block]
       ret.html_safe
     end
   end

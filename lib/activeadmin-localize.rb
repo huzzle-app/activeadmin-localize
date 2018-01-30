@@ -1,6 +1,5 @@
 require "activeadmin-localize/version"
 require 'activeadmin-localize/formtastic'
-#require 'activeadmin-localize/active_admin'
 require 'activeadmin-localize/attributes_table'
 require 'activeadmin-localize/columns'
 require 'activeadmin-localize/engine'
