@@ -12,27 +12,27 @@ module ActiveAdmin
         if options[:class]
           classes << options[:class]
         elsif title.present?
-          classes << "row-#{ActiveAdmin::Dependency.rails.parameterize(title.to_s)}"
+          classes << "row-#{title.to_s.parameterize(separator: "_")}"
         end
         options[:class] = classes.join(' ')
 
         _locales.each_with_index do |locale, index|
-          @table << tr do
+          @table << tr(options) do
             if index == 0
               th :rowspan => _locales.length do
                 header_content_for(title)
               end
             end
             @collection.each do |record|
-              td do
-                I18n.with_locale locale do
-                  (
-                    image_tag("activeadmin-localize/#{locale.to_s}.svg", alt: locale.to_s, title: locale.to_s, width: 20, height: 15) +
-                    ' ' +
-                    content_for(record, block || title)
-                  ).html_safe
+              data = nil
+              I18n.with_locale locale do
+                data = content_tag :div do
+                  (image_tag("activeadmin-localize/#{locale.to_s}.svg", alt: locale.to_s, title: locale.to_s, width: 20, height: 15) +
+                  ' ' +
+                  CGI.escapeHTML(record.send(title))).html_safe
                 end
               end
+              td data
             end
           end
         end
