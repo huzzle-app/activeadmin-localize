@@ -26,10 +26,13 @@ module ActiveAdmin
             @collection.each do |record|
               data = nil
               I18n.with_locale locale do
+                val = record.send(title)
                 data = content_tag :div do
-                  (image_tag("activeadmin-localize/#{locale.to_s}.svg", alt: locale.to_s, title: locale.to_s, width: 20, height: 15) +
-                  ' ' +
-                  CGI.escapeHTML(record.send(title))).html_safe
+                  (
+                    image_tag("activeadmin-localize/#{locale.to_s}.svg", alt: locale.to_s, title: locale.to_s, width: 20, height: 15) +
+                    ' ' +
+                    (val.blank? ? "-" : CGI.escapeHTML(val)).html_safe
+                  )
                 end
               end
               td data
@@ -47,7 +50,6 @@ module ActiveAdmin
       def default_class_name
         'attributes_table'
       end
-
     end
   end
 end
